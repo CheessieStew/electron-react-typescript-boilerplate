@@ -8,7 +8,8 @@
     "noUnusedParameters": true,
     "noImplicitReturns": true,
     "noImplicitAny": true,
-    "composite": true
+    "composite": true,
+    "experimentalDecorators": true
   },
   "references": [
     {

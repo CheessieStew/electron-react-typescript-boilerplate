@@ -5,10 +5,17 @@
     "packages": [
       "heck-app",
       "heck-core"
+    ],
+    "nohoist": [
+      "**/electron",
+      "**/electron/**",
+      "**/jest",
+      "**/jest/**"
     ]
   },
   "scripts": {
-    "run-app-2": "cd heck-app && npm run start"
+    "dev:app": "yarn workspace heck-app dev",
+    "dev:core": "yarn workspace heck-core watch"
   },
   "devDependencies": {
     "typescript": "^3.1.4",
