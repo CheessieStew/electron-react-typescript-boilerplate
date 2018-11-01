@@ -15,7 +15,8 @@
   },
   "scripts": {
     "dev:app": "yarn workspace heck-app dev",
-    "dev:core": "yarn workspace heck-core watch"
+    "dev:core": "yarn workspace heck-core watch",
+    "build:core": "yarn workspace heck-core tsc"
   },
   "devDependencies": {
     "typescript": "^3.1.4",

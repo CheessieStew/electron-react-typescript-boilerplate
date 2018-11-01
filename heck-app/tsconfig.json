@@ -1,8 +1,9 @@
 {
   "extends": "../tsconfig.json",
   "compilerOptions": {
-    "lib": ["dom", "es6", "dom.iterable", "scripthost"],
     "jsx": "react",
+    "module": "esnext",
+    "moduleResolution": "node",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "allowSyntheticDefaultImports": true,
@@ -11,8 +12,5 @@
     "outDir": "../bin/heck-app"
   },
   "files": ["app/index.tsx"],
-  "include": [
-    "**/*.ts", "**/*.tsx"
-  ],
-
+  "include": ["**/*.ts", "**/*.tsx"]
 }
