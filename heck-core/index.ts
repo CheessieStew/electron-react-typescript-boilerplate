@@ -1,1 +1,2 @@
-export * from './game';
+export * from './game/game';
+export * from './evaluator/heckEvaluator'

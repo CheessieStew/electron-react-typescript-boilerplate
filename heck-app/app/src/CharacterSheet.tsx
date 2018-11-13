@@ -1,14 +1,15 @@
-import * as core from 'heck-core';
 import React from 'react';
 import styled, { css } from 'react-emotion';
+import * as core from 'heck-core';
 
-type BoardContainerProps = {
+
+type CharacterSheetContainerProps = {
   size: string;
 };
-const BoardContainer = styled.section`
+const sheetContainer = styled.section`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  ${({ size }: BoardContainerProps) => css`
+  grid-template-columns: 1fr 2fr 1fr;
+  ${({ size }: CharacterSheetContainerProps) => css`
     height: ${size};
     width: ${size};
   `};
@@ -48,12 +49,32 @@ const GameCell = (props: GameCellProps) => (
 );
 
 export class Game extends React.Component<{}, State> {
-  public state = initialState;
+  state = initialState;
 
-  public render() {
+  private changeCell = (index: number) => {
+    if (this.state.board[index] === ' ') {
+      this.setState(state => {
+        const board = [...state.board];
+        const currentPlayer = state.player;
+        board[index] = currentPlayer;
+        return {
+          player: nextPlayer(currentPlayer),
+          board,
+        };
+      });
+    }
+  };
+
+  textChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
+    this.state.text = e.currentTarget.value;
+    // this.state.translated = doStuff(this.state.text);
+    this.setState(this.state);
+  }
+
+  render() {
     const date = new Date();
-    const { board, player } = this.state;
 
+    const { board, player } = this.state;
     return (
       <article
         style={{
@@ -75,30 +96,9 @@ export class Game extends React.Component<{}, State> {
         </div>
         <span>
           Current player: {player}
+          {/* {doStuff(player.charCodeAt(0))} */}
         </span>
       </article>
     );
   }
-  private changeCell = (index: number) => {
-    if (this.state.board[index] === ' ') {
-      this.setState(state => {
-        const board = [...state.board];
-        const currentPlayer = state.player;
-        board[index] = currentPlayer;
-          
-        return {
-          player: nextPlayer(currentPlayer),
-          board,
-        };
-      });
-    }
-  };
-
-  private textChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
-    this.state.text = e.currentTarget.value;
-    this.state.translated = core.doStuff(this.state.text);
-    this.setState(this.state);
-  }
-
-  
 }

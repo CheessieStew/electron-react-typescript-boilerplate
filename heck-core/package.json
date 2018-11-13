@@ -10,19 +10,20 @@
     "url": "https://github.com/ChessieStew"
   },
   "scripts": {
-    "antler": "yarn antlr4ts",
-    "antlr4ts": "antlr4ts -visitor ./heck.g4 -o ./Evaluator",
-    "postinstall": "npm rebuild --runtime=electron --target=1.6.6 --disturl=https://atom.io/download/atom-shell --build-from-source",
+    "antler": "java org.antlr.v4.Tool -Dlanguage=JavaScript -visitor ./heck.g4 -o ./evaluator/antlr",
     "tsc": "tsc",
     "watch": "tsc --watch"
   },
   "license": "MIT",
   "dependencies": {
+    "@types/antlr4": "^4.7.1",
+    "@types/ramda": "^0.26.0",
+    "antlr4": "^4.7.1",
     "antlr4-webpack-loader": "^0.1.1",
-    "antlr4ts": "^0.4.1-alpha.0"
+    "ramda": "^0.25.0"
   },
   "devDependencies": {
-    "antlr4ts-cli": "^0.4.0-alpha.4",
     "typescript": "^3.1.4"
+
   }
 }
