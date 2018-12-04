@@ -72,10 +72,6 @@ export class Game extends React.Component<{}, State> {
     );
   }
 
-  private componentWillReceiveProps = (nextProps : Props) => {
-    if ((nextProps.data.snip != this.state.snip.snip) || (nextProps.data.comment != this.state.snip.comment))
-     this.setState({snip: nextProps.data});
-}
   private handleInTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => { this.setState(state => {
     return {
       player: state.player,
