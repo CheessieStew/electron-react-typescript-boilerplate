@@ -1,13 +1,15 @@
 import React from 'react';
 import styled, { css } from 'react-emotion';
+import * as core from 'heck-core';
 
-type BoardContainerProps = {
+
+type CharacterSheetContainerProps = {
   size: string;
 };
-const BoardContainer = styled.section`
+const sheetContainer = styled.section`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  ${({ size }: BoardContainerProps) => css`
+  grid-template-columns: 1fr 2fr 1fr;
+  ${({ size }: CharacterSheetContainerProps) => css`
     height: ${size};
     width: ${size};
   `};
@@ -22,6 +24,8 @@ function nextPlayer(currentPlayer: Rune) {
 const initialState = {
   board: Array.from({ length: 9 }).fill(' ') as Rune[],
   player: 'X' as Rune,
+  text: '',
+  translated: '',
 };
 
 type State = typeof initialState;
@@ -61,7 +65,15 @@ export class Game extends React.Component<{}, State> {
     }
   };
 
+  textChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
+    this.state.text = e.currentTarget.value;
+    // this.state.translated = doStuff(this.state.text);
+    this.setState(this.state);
+  }
+
   render() {
+    const date = new Date();
+
     const { board, player } = this.state;
     return (
       <article
@@ -70,14 +82,22 @@ export class Game extends React.Component<{}, State> {
           fontSize: '20px',
         }}
       >
-        <BoardContainer size="200px">
-          {board.map((rune, i) => (
-            <GameCell key={i} onClick={() => this.changeCell(i)}>
-              {rune}
-            </GameCell>
-          ))}
-        </BoardContainer>
-        <span>Current player: {player}</span>
+        <div>
+          <textarea value={this.state.text} onChange={this.textChange} />
+          <textarea value={this.state.translated} />
+
+          <BoardContainer size="200px">
+            {board.map((rune, i) => (
+              <GameCell key={i} onClick={() => this.changeCell(i)}>
+                {rune}
+              </GameCell>
+            ))}
+          </BoardContainer>
+        </div>
+        <span>
+          Current player: {player}
+          {/* {doStuff(player.charCodeAt(0))} */}
+        </span>
       </article>
     );
   }

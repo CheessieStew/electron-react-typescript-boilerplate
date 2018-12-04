@@ -1,33 +1,30 @@
 {
+  "project": true,
   "compilerOptions": {
-    "target": "es5",
-    "moduleResolution": "node",
-    "module": "commonjs",
+    "lib": ["dom", "es6", "es7", "dom.iterable", "scripthost"],
+    "allowSyntheticDefaultImports": true,
+    "composite": true,
+    "declaration": true,
+    "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
     "jsx": "react",
-    "lib": ["dom", "es6", "dom.iterable", "scripthost"],
-    "types": [],
-
-    "alwaysStrict": true,
-    "strictNullChecks": true,
+    "module": "esnext",
     "noImplicitAny": true,
     "noImplicitReturns": true,
-    "noImplicitThis": true,
-    "noUnusedLocals": true,
-    "allowSyntheticDefaultImports": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-
+    "noUnusedLocals": false,
+    "noUnusedParameters": true,
     "sourceMap": true,
-
-    "outDir": "dist"
+    "strict": true,
+    "target": "es5"
   },
-  "files": ["app/index.tsx"],
-  "include": [
-    "app/**/*.ts",
-    "app/**/*.tsx",
-    "test/**/*.ts",
-    "test/**/*.tsx",
-    "node_modules/@types/**/*.d.ts"
-  ],
-  "exclude": ["dist"]
+  "exclude": ["**/bin"],
+  "references": [
+    {
+      "path": "./heck-core"
+    },
+    {
+      "path": "./heck-app"
+    }
+  ]
 }
