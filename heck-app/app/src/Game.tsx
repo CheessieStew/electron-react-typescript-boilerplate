@@ -1,5 +1,5 @@
 import * as core from 'heck-core';
-import React from 'react';
+import React, { Props } from 'react';
 import styled, { css } from 'react-emotion';
 
 type BoardContainerProps = {
@@ -16,21 +16,7 @@ const BoardContainer = styled.section`
 
 type Rune = 'X' | 'O' | ' ';
 
-function nextPlayer(currentPlayer: Rune) {
-  return currentPlayer === 'X' ? 'O' : 'X';
-}
-
-const initialState = {
-  board: Array.from({ length: 9 }).fill(' ') as Rune[],
-  player: 'X' as Rune,
-  text: '',
-  translated: '',
-};
-
-type State = typeof initialState;
-
 type GameCellProps = {
-  onClick: React.MouseEventHandler<HTMLButtonElement>;
   children: Rune;
 };
 const GameCell = (props: GameCellProps) => (
@@ -47,6 +33,21 @@ const GameCell = (props: GameCellProps) => (
   />
 );
 
+
+function nextPlayer(currentPlayer: Rune) {
+  return currentPlayer === 'X' ? 'O' : 'X';
+}
+
+const initialState = {
+  board: Array.from({ length: 9 }).fill(' ') as Rune[],
+  player: 'X' as Rune,
+  inText: '',
+  outText: '',
+};
+
+type State = typeof initialState;
+
+
 export class Game extends React.Component<{}, State> {
   public state = initialState;
 
@@ -61,42 +62,28 @@ export class Game extends React.Component<{}, State> {
           fontSize: '20px',
         }}
       >
-        <div>
-          <textarea value={this.state.text} onChange={this.textChange} />
-          <textarea value={this.state.translated} />
-
-          <BoardContainer size="200px">
-            {board.map((rune, i) => (
-              <GameCell key={i} onClick={() => this.changeCell(i)}>
-                {rune}
-              </GameCell>
-            ))}
-          </BoardContainer>
-        </div>
         <span>
-          Current player: {player}
+          <textarea
+                    value={this.state.inText} 
+                    onChange={this.handleInTextChange} />
+          <textarea readOnly value={this.state.outText} />
         </span>
       </article>
     );
   }
-  private changeCell = (index: number) => {
-    if (this.state.board[index] === ' ') {
-      this.setState(state => {
-        const board = [...state.board];
-        const currentPlayer = state.player;
-        board[index] = currentPlayer;
-          
-        return {
-          player: nextPlayer(currentPlayer),
-          board,
-        };
-      });
-    }
-  };
 
-  private textChange(e: React.ChangeEvent<HTMLTextAreaElement>) {
-    this.state.text = e.currentTarget.value;
-    this.state.translated = core.doStuff(this.state.text);
+  private componentWillReceiveProps = (nextProps : Props) => {
+    if ((nextProps.data.snip != this.state.snip.snip) || (nextProps.data.comment != this.state.snip.comment))
+     this.setState({snip: nextProps.data});
+}
+  private handleInTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => { this.setState(state => {
+    return {
+      player: state.player,
+      board: state.board,
+      inText: e.target.value,
+      outText: core.doStuff(e.target.value)
+      };
+    });
     this.setState(this.state);
   }
 

@@ -10,7 +10,7 @@
     "url": "https://github.com/ChessieStew"
   },
   "scripts": {
-    "antler": "java org.antlr.v4.Tool -Dlanguage=JavaScript -visitor ./heck.g4 -o ./evaluator/antlr",
+    "antler": "java org.antlr.v4.Tool -Dlanguage=JavaScript -visitor ./evaluator/heck.g4 -o ./evaluator/antlr",
     "tsc": "tsc",
     "watch": "tsc --watch"
   },
